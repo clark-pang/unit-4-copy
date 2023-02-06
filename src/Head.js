@@ -21,7 +21,20 @@ class Head {
     let leftPosition = Number(head.style.left.replace('px', ''));
 
     if (direction === 'right') {
+      // jank x2
       head.style.left = `${(leftPosition += 50)}px`;
+    }
+    if (direction === 'left') {
+      // jank x2
+      head.style.left = `${(leftPosition -= 50)}px`;
+    }
+    if (direction === 'up') {
+      // jank x2
+      head.style.top = `${(topPosition -= 50)}px`;
+    }
+    if (direction === 'down') {
+      // jank x2
+      head.style.top = `${(topPosition += 50)}px`;
     }
 
     setTimeout(this.move.bind(this), this.SPEED);

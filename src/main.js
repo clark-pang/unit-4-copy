@@ -10,5 +10,17 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('pressed left');
       head.currentDirection = 'left';
     }
+    if (e.code === 'ArrowRight') {
+      console.log('pressed right');
+      head.currentDirection = 'right';
+    }
+    if (e.code === 'ArrowDown') {
+      console.log('pressed down');
+      head.currentDirection = 'down';
+    }
+    if (e.code === 'ArrowUp') {
+      console.log('pressed up');
+      head.currentDirection = 'up';
+    }
   });
 });
