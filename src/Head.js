@@ -43,7 +43,6 @@ class Head {
     // get position
     let topPosition = Number(head.style.top.replace('px', ''));
     let leftPosition = Number(head.style.left.replace('px', ''));
-
     
     // handle moving
     // jank x2
