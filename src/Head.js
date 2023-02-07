@@ -5,11 +5,13 @@ class Head {
     el.appendChild(this.node);
 
     this.currentDirection = 'right';
-    this.SPEED = 250;
+    this.SPEED = 100;
     this.BOARD_SIZE = 700;
 
     this.node.style.top = 0;
     this.node.style.left = 0;
+
+    this.getApplePosition();
 
     this.timeoutID = setTimeout(this.move.bind(this), this.SPEED);
     
@@ -36,6 +38,19 @@ class Head {
     return false;
   }
 
+  // get apple position 
+  getApplePosition() {
+
+    const appleXPosition = apple.leftPosition;
+    const appleYPosition = apple.topPosition;
+    console.log('x, y: ', appleXPosition, appleYPosition);
+    return [];
+  } 
+
+  isInApple(topPosition, leftPosition) {
+    return (topPosition === apple.topPosition && leftPosition === apple.leftPosition);
+  }
+
   move() {
     const head = this.node;
     const direction = this.currentDirection;
@@ -43,6 +58,10 @@ class Head {
     // get position
     let topPosition = Number(head.style.top.replace('px', ''));
     let leftPosition = Number(head.style.left.replace('px', ''));
+
+    // check if position matches apple position
+    if(this.isInApple(topPosition, leftPosition)) apple.randomizeLocation();
+    // if so, then get rid of dat appl and make new one
     
     // handle moving
     // jank x2
@@ -70,6 +89,8 @@ class Head {
     
   }
 }
+
+
 
 
 // console.log('parentElement: ', head.parentElement);

@@ -5,13 +5,18 @@ class Apple {
     this.node.setAttribute('src', 'src/assets/apple.jpg');
 
     el.appendChild(this.node);
-    
-    
+    this.leftPosition = null;
+    this.topPosition = null;
+    this.randomizeLocation();
+  }
+  
+  randomizeLocation() {
     // 14 is for the board size
-    const xPosition = Math.floor((Math.random() * 14)); // gives random int from 0 - 13 inclusive
-    const yPosition = Math.floor((Math.random() * 14)); // gives random int from 0 - 13 inclusive
-    this.node.style.left = (xPosition * 50) + 'px';
-    this.node.style.top = (yPosition * 50) + 'px';
+    this.leftPosition = Math.floor((Math.random() * 14)) * 50; // gives random int from 0 - 13 inclusive
+    this.topPosition = Math.floor((Math.random() * 14)) * 50; // gives random int from 0 - 13 inclusive
+    this.node.style.left = (this.leftPosition) + 'px';
+    this.node.style.top = (this.topPosition) + 'px';
 
   }
 }
+
