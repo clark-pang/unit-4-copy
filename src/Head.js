@@ -7,9 +7,11 @@ class Head {
     this.currentDirection = 'right';
     this.SPEED = 100;
     this.BOARD_SIZE = 700;
-
-    this.node.style.top = 0;
-    this.node.style.left = 0;
+  
+    this.topPosition = 0;
+    this.leftPosition = 0;
+    // this.node.style.top = 0;
+    // this.node.style.left = 0;
 
     this.getApplePosition();
 
@@ -56,33 +58,36 @@ class Head {
     const direction = this.currentDirection;
     
     // get position
-    let topPosition = Number(head.style.top.replace('px', ''));
-    let leftPosition = Number(head.style.left.replace('px', ''));
+    // let topPosition = Number(head.style.top.replace('px', ''));
+    // let leftPosition = Number(head.style.left.replace('px', ''));
 
     // check if position matches apple position
-    if(this.isInApple(topPosition, leftPosition)) apple.randomizeLocation();
+    if(this.isInApple(this.topPosition, this.leftPosition)) {
+      console.log('in head, this is: ', this);
+      apple.randomizeLocation(this);
+    }
     // if so, then get rid of dat appl and make new one
     
     // handle moving
     // jank x2
     if (direction === 'right') {
-      head.style.left = `${(leftPosition += 50)}px`;
+      head.style.left = `${(this.leftPosition += 50)}px`;
     }
     if (direction === 'left') {
-      head.style.left = `${(leftPosition -= 50)}px`;
+      head.style.left = `${(this.leftPosition -= 50)}px`;
     }
     if (direction === 'up') {
-      head.style.top = `${(topPosition -= 50)}px`;
+      head.style.top = `${(this.topPosition -= 50)}px`;
     }
     if (direction === 'down') {
-      head.style.top = `${(topPosition += 50)}px`;
+      head.style.top = `${(this.topPosition += 50)}px`;
     }
     
     /*
     setTimeout still queues a move call after we have set
     isGameOver to false
     */
-    if (!this.isGameOver(topPosition, leftPosition)) {
+    if (!this.isGameOver(this.topPosition, this.leftPosition)) {
       this.timeoutID = setTimeout(this.move.bind(this), this.SPEED);
     }
     // check for out of bounds
