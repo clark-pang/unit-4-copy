@@ -58,6 +58,16 @@ class Head {
     return (topPosition === apple.topPosition && leftPosition === apple.leftPosition);
   }
 
+  toggleDeath() {
+    this.node.classList.add('dead');
+    if (this.body) {
+      for (let i = 0; i < this.body.body.length; i++) {
+        const seg = this.body.body[i];
+        setTimeout(() => seg.node.classList.add('dead'), 150 * (i + 1));
+      }
+    }
+  }
+
   endGame() {
     // if there is no hs, set hs
     // if score > hs, set hs
@@ -69,6 +79,7 @@ class Head {
     }
 
     clearInterval(this.timeoutID);
+    this.toggleDeath();
   }
 
   isInOwnSeg() {
@@ -84,14 +95,15 @@ class Head {
     const head = this.node;
     const prevLeft = this.leftPosition;
     const prevTop = this.topPosition;
+
+    // we already hard-check in our listener to avoid opposite presses
+    // but this is an extra check such that the user cannot 'queue' an opposite direction
+      // (between the invocations of move())
     if (this.lastDirection) {
       // if it's opposite from current, assign last to current
       if (this.oppsMap[this.lastDirection] === this.currentDirection) {
         this.currentDirection = this.lastDirection;
       }
-      // otherwise
-          // assign current to last
-          //
     }
     const direction = this.currentDirection;
     this.lastDirection = this.currentDirection;

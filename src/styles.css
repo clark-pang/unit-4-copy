@@ -24,6 +24,11 @@ body, html {
   width: 50px;
   background-color: rgba(196, 208, 219, .7);
   position: absolute;
+  transition: background-color 1s ease;
+}
+
+#head.dead, .seg.dead{
+  background-color: rgba(233, 132, 132, 0.7);
 }
 .container {
   height: 100%;
