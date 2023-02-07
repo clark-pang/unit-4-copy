@@ -3,7 +3,6 @@ class Body {
     this.body = [];
     this.body.push(new Seg(head.topPosition, head.leftPosition, parent));
     this.parent = parent;
-
   }
 
   addSeg() {
@@ -12,17 +11,16 @@ class Body {
     this.body.push(newSeg);
   }
 
+  // always be sending in the head's previous location so we can update our conga line
+  // shift everything over in reverse (to avoid overwrite)
   move(top, left) {
-
     for (let i = this.body.length - 1; i >= 1; i--) {
-      console.log('XXX')
       const currSeg = this.body[i];
       const prevSeg = this.body[i - 1];
       currSeg.topPosition = prevSeg.topPosition;
       currSeg.leftPosition = prevSeg.leftPosition;
       currSeg.node.style.left = currSeg.leftPosition + 'px';
       currSeg.node.style.top = currSeg.topPosition + 'px';
-      console.log('currseg: ', currSeg);
     }
 
     const firstSeg = this.body[0];
@@ -32,8 +30,6 @@ class Body {
 
     firstSeg.node.style.left = firstSeg.leftPosition + 'px';
     firstSeg.node.style.top = firstSeg.topPosition + 'px';
-    console.log('firstseg: ', firstSeg);
-
   }
 }
 
@@ -46,6 +42,9 @@ class Seg {
     parent.appendChild(this.node);
   }
 }
+
+
+
 //clark notes:
 // a body is just a collection of segments
     // each seg must contain left and top position
@@ -53,6 +52,10 @@ class Seg {
 // we can store them in an array
 // in order to move the snake accordingly, we need to shift over that array by one
   // i.e. replace each seg's x and y with the next seg's
+// note to self about the 'self contained 1st chain' bug:
+// it was solved by realizing that keeping a reassigned pointer to 'this' would be of no help
+// since it's a reference to the object
+// you had to get the specific properties
 
 
 /* CHRIS NOTES LOL

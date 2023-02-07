@@ -12,9 +12,34 @@
   <script src='src/Head.js' defer></script>
   <script src='src/Body.js' defer></script>
   <link rel="stylesheet" href="src/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&family=Source+Code+Pro:wght@200;300;400&display=swap"
+    rel="stylesheet">
+
+
 </head>
 <body>
-  <div id="board"></div>
+  <video autoplay muted loop id="background-vid">
+    <source src="/src/assets/waves-med.mp4" type="video/mp4">
+  </video>
+  <div class="container">
+    <div class="left">
+    </div>
+    <div id="board"></div>
+    <div class="details">
+      <div class="scores">
+        <h2>score</h2>
+        <h2 id="score">0</h2>
+        <h2>high</h2>
+        <h2 id="high-score"></h2>
+      </div>
+      <button id="play-button">play</button>
+    </div>
+  </div>
   <script src="./src/main.js"></script>
 </body>
 

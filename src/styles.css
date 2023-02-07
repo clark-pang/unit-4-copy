@@ -1,16 +1,40 @@
-#head, .seg {
-  background: black;
-  height: 50px;
-  width: 50px;
-  background-color: rgb(146, 220, 146);
-  position: absolute;
+/* body, *, body * {
+  outline: 1px solid lime;
+} */
+
+/* resets */
+html, body, body *, * {
+  padding: 0;
+  margin: 0;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  /* font-family: 'Source Code Pro', monospace; */
+}
+body, html {
+  height: 100%;
 }
 
-
+#head, .seg {
+  height: 50px;
+  width: 50px;
+  background-color: rgba(196, 208, 219, .7);
+  position: absolute;
+}
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 #board {
   height: 700px;
   width: 700px;
-  border: 1px black solid;
+  border: 1rem solid rgba(196, 208, 219, .7);
   position: relative;
 }
 
@@ -18,4 +42,84 @@
   height: 50px;
   width: 50px;
   position: absolute;
+  object-fit: cover;
+}
+
+#apple img {
+  width: 55px;
+  height: 65px;
+  position: relative;
+  bottom: 12px;
+  right: 2px;
+}
+
+#background-vid {
+  position: fixed;
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left:0;
+}
+.left {
+  flex: 1;
+}
+.details {
+  position: relative;
+
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scores {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+
+h2 {
+  color: white;
+  position: relative;
+  font-weight: 100;
+  font-size: 5.3rem;
+  letter-spacing: 1.1rem;
+}
+
+button {
+  background: none;
+  color: white;
+  font-size: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+  padding-right: 1.8rem;
+  padding-left: 3rem;
+  border-radius: 1rem;
+  border: 1px solid white;
+  font-family: 'Poppins', sans-serif;
+  /* font-family: 'Source Code Pro', monospace; */
+  font-weight: 100;
+  letter-spacing: 1.3rem;
+  position: relative;
+  cursor: pointer;
+  transition: all .3s ease;
+
+}
+
+button:hover {
+  background:rgba(196, 208, 219, .7);
+
+}
+
+button:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+button, button:hover, button:active {
+  outline: none;
 }

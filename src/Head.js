@@ -5,61 +5,45 @@ class Head {
     el.appendChild(this.node);
 
     this.parent = el;
-
     this.currentDirection = 'right';
-    this.SPEED = 100;
+
+    this.SPEED = 85;
     this.BOARD_SIZE = 700;
 
     this.body = null;
 
     this.topPosition = 0;
     this.leftPosition = 0;
-    // this.node.style.top = 0;
-    // this.node.style.left = 0;
 
-    this.getApplePosition();
+    this.timeoutID;
+    this.score = 0;
 
-    this.timeoutID = setTimeout(this.move.bind(this), this.SPEED);
-    this.oppMapping = {
-      'left': 'right',
-      'right': 'left',
-      'up': 'down',
-      'down': 'up'
-    }
-
-  /* end game temp name
-    need to check
-    - if the position of the head is outside
-    of the game board
-
-    potential conditions
-    - before the next time the head moves?
-  */
   }
 
-  // square
-  isOutOfBounds(top, left, direction, timeoutID) {
-    console.log('top: ', top, 'left: ', left);
+  startGame() {
+    this.timeoutID = setTimeout(this.move.bind(this), this.SPEED);
+    score.innerText = '0';
+  }
+
+  cleanUp() {
+    // remove all elements from dom
+    if (this.body) {
+      for (const seg of this.body.body) {
+        seg.node.remove();
+      }
+    }
+    this.node.remove();
+  }
+
+  isOutOfBounds(top, left, direction) {
     if (direction === 'right') left += 50;
     if (direction === 'left') left -= 50;
     if (direction === 'up') top -= 50;
     if (direction === 'down') top += 50;
     if (top < 0 || left < 0 || top >= 700 || left >= 700) {
-      console.log('GAME OVER');
-      console.log('top: ', top, 'left: ', left);
-      this.endGame();
       return true;
     }
     return false;
-  }
-
-  // get apple position
-  getApplePosition() {
-
-    const appleXPosition = apple.leftPosition;
-    const appleYPosition = apple.topPosition;
-    console.log('x, y: ', appleXPosition, appleYPosition);
-    return [];
   }
 
   isInApple(topPosition, leftPosition) {
@@ -67,19 +51,25 @@ class Head {
   }
 
   endGame() {
+    // if there is no hs, set hs
+    // if score > hs, set hs
+    const currHS = localStorage.getItem('hs');
+    console.log('currHS is ', currHS);
+    if (currHS === null || this.score > currHS) {
+      localStorage.setItem('hs', this.score);
+      highScore.innerText = this.score;
+    }
+
     clearInterval(this.timeoutID);
   }
 
   isInOwnSeg() {
-    // iterate through body
-
     for (const seg of this.body.body) {
       if (this.leftPosition === seg.leftPosition && this.topPosition === seg.topPosition) {
-        this.endGame();
         return true;
       }
     }
-    // if any of coordinates match the head's coordinates then end the game
+    return false;
   }
 
   move() {
@@ -88,36 +78,38 @@ class Head {
     const prevTop = this.topPosition;
     const direction = this.currentDirection;
 
-    if (this.isOutOfBounds(this.topPosition, this.leftPosition, direction, this.timeoutID)) return;
-    this.timeoutID = setTimeout(this.move.bind(this), this.SPEED);
+    // end game checks
+    // oob?
+    if (this.isOutOfBounds(this.topPosition, this.leftPosition, direction)) {
+      this.endGame();
+      return;
+    }
+    // ourobouros?
+    if (this.body !== null && this.isInOwnSeg()) {
+      this.endGame();
+      return;
+    }
 
-    // check if in own seg
-    if (this.body !== null && this.isInOwnSeg()) return;
-
-    // handle head in apple
+    // handle head in apple (monch monch)
     if(this.isInApple(this.topPosition, this.leftPosition)) {
+      this.score++;
+      score.innerText = this.score;
       if (this.body === null) this.body = new Body(this, this.parent);
       else this.body.addSeg();
       apple.randomizeLocation(this);
-      console.log('BODY: ', this.body);
     }
 
-    // handle moving shnake head (jank x2)
+    // handle moving shnake head
     if (direction === 'right') head.style.left = `${(this.leftPosition += 50)}px`;
     if (direction === 'left') head.style.left = `${(this.leftPosition -= 50)}px`;
     if (direction === 'up') head.style.top = `${(this.topPosition -= 50)}px`;
     if (direction === 'down') head.style.top = `${(this.topPosition += 50)}px`;
 
     // handle moving shnake body
-
     if (this.body) this.body.move(prevTop, prevLeft);
 
-    /*
-    setTimeout still queues a move call after we have set
-    isGameOver to false
-    */
-    // check for out of bounds
-
+    // setup new move
+    this.timeoutID = setTimeout(this.move.bind(this), this.SPEED);
   }
 }
 

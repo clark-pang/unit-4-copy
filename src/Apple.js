@@ -1,8 +1,10 @@
 class Apple {
   constructor(el) {
-    this.node = document.createElement('img');
+    this.node = document.createElement('div');
     this.node.setAttribute('id', 'apple');
-    this.node.setAttribute('src', 'src/assets/apple.jpg');
+    const img = document.createElement('img');
+    img.setAttribute('src', 'src/assets/apple2.gif');
+    this.node.appendChild(img);
 
     el.appendChild(this.node);
     this.leftPosition = null;
