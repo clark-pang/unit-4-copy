@@ -7,7 +7,7 @@ class Head {
     this.parent = el;
 
     this.currentDirection = 'right';
-    this.SPEED = 70;
+    this.SPEED = 100;
     this.BOARD_SIZE = 700;
 
     this.body = null;
@@ -38,7 +38,7 @@ class Head {
   }
 
   // square
-  isGameOver(top, left, direction, timeoutID) {
+  isOutOfBounds(top, left, direction, timeoutID) {
     console.log('top: ', top, 'left: ', left);
     if (direction === 'right') left += 50;
     if (direction === 'left') left -= 50;
@@ -47,7 +47,7 @@ class Head {
     if (top < 0 || left < 0 || top >= 700 || left >= 700) {
       console.log('GAME OVER');
       console.log('top: ', top, 'left: ', left);
-      clearTimeout(timeoutID);
+      this.endGame();
       return true;
     }
     return false;
@@ -66,14 +66,33 @@ class Head {
     return (topPosition === apple.topPosition && leftPosition === apple.leftPosition);
   }
 
+  endGame() {
+    clearInterval(this.timeoutID);
+  }
+
+  isInOwnSeg() {
+    // iterate through body
+
+    for (const seg of this.body.body) {
+      if (this.leftPosition === seg.leftPosition && this.topPosition === seg.topPosition) {
+        this.endGame();
+        return true;
+      }
+    }
+    // if any of coordinates match the head's coordinates then end the game
+  }
+
   move() {
     const head = this.node;
     const prevLeft = this.leftPosition;
     const prevTop = this.topPosition;
     const direction = this.currentDirection;
 
-    if (this.isGameOver(this.topPosition, this.leftPosition, direction, this.timeoutID)) return;
+    if (this.isOutOfBounds(this.topPosition, this.leftPosition, direction, this.timeoutID)) return;
     this.timeoutID = setTimeout(this.move.bind(this), this.SPEED);
+
+    // check if in own seg
+    if (this.body !== null && this.isInOwnSeg()) return;
 
     // handle head in apple
     if(this.isInApple(this.topPosition, this.leftPosition)) {
