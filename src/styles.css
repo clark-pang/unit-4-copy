@@ -1,10 +1,11 @@
-#head {
+#head, .seg {
   background: black;
   height: 50px;
   width: 50px;
-  background-color: green;
+  background-color: rgb(146, 220, 146);
   position: absolute;
 }
+
 
 #board {
   height: 700px;
