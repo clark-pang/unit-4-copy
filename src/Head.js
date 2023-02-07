@@ -5,7 +5,15 @@ class Head {
     el.appendChild(this.node);
 
     this.parent = el;
+    this.lastDirection = null;
     this.currentDirection = 'right';
+
+    this.oppsMap = {
+      'left': 'right',
+      'right': 'left',
+      'up': 'down',
+      'down': 'up'
+    }
 
     this.SPEED = 85;
     this.BOARD_SIZE = 700;
@@ -76,7 +84,17 @@ class Head {
     const head = this.node;
     const prevLeft = this.leftPosition;
     const prevTop = this.topPosition;
+    if (this.lastDirection) {
+      // if it's opposite from current, assign last to current
+      if (this.oppsMap[this.lastDirection] === this.currentDirection) {
+        this.currentDirection = this.lastDirection;
+      }
+      // otherwise
+          // assign current to last
+          //
+    }
     const direction = this.currentDirection;
+    this.lastDirection = this.currentDirection;
 
     // end game checks
     // oob?
