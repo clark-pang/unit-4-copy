@@ -15,7 +15,7 @@ class Head {
       'down': 'up'
     }
 
-    this.SPEED = 85;
+    this.SPEED = 75;  // 85 is chill
     this.BOARD_SIZE = 700;
 
     this.body = null;

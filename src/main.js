@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const currHS = localStorage.getItem('hs');
   highScore.innerText = currHS ?? 0;
 
-  // left off const, to allow access to global space
-  // var also doesn't allow it to be accessed
   apple = new Apple(board);
   let head;
 
